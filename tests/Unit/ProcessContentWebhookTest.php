@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Tests\Unit;
 
-use Core\Mod\Tenant\Models\Workspace;
+use Core\Tenant\Models\Workspace;
 use Illuminate\Support\Facades\Queue;
 use Core\Mod\Content\Enums\ContentType;
 use Core\Mod\Content\Jobs\ProcessContentWebhook;

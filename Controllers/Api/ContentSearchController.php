@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Core\Mod\Content\Controllers\Api;
 
 use Core\Front\Controller;
-use Core\Mod\Api\Concerns\HasApiResponses;
-use Core\Mod\Api\Concerns\ResolvesWorkspace;
+use Core\Api\Concerns\HasApiResponses;
+use Core\Api\Concerns\ResolvesWorkspace;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Core\Mod\Content\Services\ContentSearchService;

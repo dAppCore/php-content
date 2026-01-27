@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Models;
 
-use Mod\Agentic\Models\Prompt;
-use Core\Mod\Tenant\Models\Workspace;
+use Core\Mod\Agentic\Models\Prompt;
+use Core\Tenant\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

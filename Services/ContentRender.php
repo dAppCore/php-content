@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Core\Mod\Content\Models\ContentItem;
-use Core\Mod\Tenant\Models\Workspace;
+use Core\Tenant\Models\Workspace;
 
 /**
  * ContentRender - Public workspace frontend renderer.
@@ -293,13 +293,13 @@ class ContentRender extends Controller
     public function addToWaitlist(?Workspace $workspace, string $email): bool
     {
         // Check if email already exists
-        $existing = \Core\Mod\Tenant\Models\WaitlistEntry::where('email', $email)->first();
+        $existing = \Core\Tenant\Models\WaitlistEntry::where('email', $email)->first();
 
         if ($existing) {
             return false;
         }
 
-        \Core\Mod\Tenant\Models\WaitlistEntry::create([
+        \Core\Tenant\Models\WaitlistEntry::create([
             'email' => $email,
             'source' => $workspace ? "workspace:{$workspace->slug}" : 'content:global',
             'interest' => $workspace ? 'workspace_content' : 'platform',
@@ -317,7 +317,7 @@ class ContentRender extends Controller
      */
     public function getWaitlist(?Workspace $workspace): array
     {
-        $query = \Core\Mod\Tenant\Models\WaitlistEntry::query();
+        $query = \Core\Tenant\Models\WaitlistEntry::query();
 
         if ($workspace) {
             $query->where('source', "workspace:{$workspace->slug}");

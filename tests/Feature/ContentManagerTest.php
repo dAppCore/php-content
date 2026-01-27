@@ -5,8 +5,8 @@ use Core\Mod\Content\Models\ContentItem;
 use Core\Mod\Content\Models\ContentMedia;
 use Core\Mod\Content\Models\ContentTaxonomy;
 use Core\Mod\Content\Models\ContentWebhookLog;
-use Core\Mod\Tenant\Models\User;
-use Core\Mod\Tenant\Models\Workspace;
+use Core\Tenant\Models\User;
+use Core\Tenant\Models\Workspace;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 

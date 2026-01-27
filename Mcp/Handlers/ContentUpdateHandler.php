@@ -7,7 +7,7 @@ namespace Core\Mod\Content\Mcp\Handlers;
 use Carbon\Carbon;
 use Core\Front\Mcp\Contracts\McpToolHandler;
 use Core\Front\Mcp\McpContext;
-use Core\Mod\Tenant\Models\Workspace;
+use Core\Tenant\Models\Workspace;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Core\Mod\Content\Models\ContentItem;

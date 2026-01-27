@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Core\Mod\Content\Services;
 
 use Carbon\Carbon;
-use Core\Mod\Tenant\Models\Workspace;
+use Core\Tenant\Models\Workspace;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;

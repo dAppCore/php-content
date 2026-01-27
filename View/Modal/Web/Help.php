@@ -6,8 +6,8 @@ namespace Core\Mod\Content\View\Modal\Web;
 
 use Livewire\Component;
 use Core\Mod\Content\Models\ContentItem;
-use Core\Mod\Tenant\Models\Workspace;
-use Core\Mod\Tenant\Services\WorkspaceService;
+use Core\Tenant\Models\Workspace;
+use Core\Tenant\Services\WorkspaceService;
 
 class Help extends Component
 {

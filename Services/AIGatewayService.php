@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Services;
 
-use Mod\Agentic\Services\AgenticResponse;
-use Mod\Agentic\Services\ClaudeService;
-use Mod\Agentic\Services\GeminiService;
+use Core\Mod\Agentic\Services\AgenticResponse;
+use Core\Mod\Agentic\Services\ClaudeService;
+use Core\Mod\Agentic\Services\GeminiService;
 use Core\Mod\Content\Models\AIUsage;
 use Core\Mod\Content\Models\ContentBrief;
 use RuntimeException;

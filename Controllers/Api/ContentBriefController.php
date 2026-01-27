@@ -7,8 +7,8 @@ namespace Core\Mod\Content\Controllers\Api;
 use Core\Front\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Core\Mod\Api\Concerns\HasApiResponses;
-use Core\Mod\Api\Concerns\ResolvesWorkspace;
+use Core\Api\Concerns\HasApiResponses;
+use Core\Api\Concerns\ResolvesWorkspace;
 use Core\Mod\Content\Models\ContentBrief;
 use Core\Mod\Content\Resources\ContentBriefResource;
 

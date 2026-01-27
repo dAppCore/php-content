@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\View\Modal\Web;
 
-use Core\Mod\Tenant\Models\Workspace;
+use Core\Tenant\Models\Workspace;
 use Livewire\Component;
 use Core\Mod\Content\Models\ContentItem;
 

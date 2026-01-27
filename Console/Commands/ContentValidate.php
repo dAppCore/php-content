@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Console\Commands;
 
-use Mod\Agentic\Services\ContentService;
+use Core\Mod\Agentic\Services\ContentService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 

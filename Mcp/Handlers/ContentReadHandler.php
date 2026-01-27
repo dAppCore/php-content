@@ -6,7 +6,7 @@ namespace Core\Mod\Content\Mcp\Handlers;
 
 use Core\Front\Mcp\Contracts\McpToolHandler;
 use Core\Front\Mcp\McpContext;
-use Core\Mod\Tenant\Models\Workspace;
+use Core\Tenant\Models\Workspace;
 use Core\Mod\Content\Models\ContentItem;
 
 /**

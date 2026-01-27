@@ -1,7 +1,7 @@
 <?php
 
 use Core\Mod\Content\Services\ContentRender;
-use Core\Mod\Tenant\Models\Workspace;
+use Core\Tenant\Models\Workspace;
 use Illuminate\Http\Request;
 
 beforeEach(function () {
