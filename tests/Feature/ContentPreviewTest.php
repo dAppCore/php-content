@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Tests\Feature;
+namespace Core\Mod\Content\Tests\Feature;
 
 use Core\Mod\Tenant\Models\User;
 use Core\Mod\Tenant\Models\Workspace;
-use Core\Content\Enums\ContentType;
-use Core\Content\Models\ContentItem;
+use Core\Mod\Content\Enums\ContentType;
+use Core\Mod\Content\Models\ContentItem;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 

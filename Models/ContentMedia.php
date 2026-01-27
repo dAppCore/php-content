@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Models;
+namespace Core\Mod\Content\Models;
 
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +13,9 @@ class ContentMedia extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): \Core\Content\Database\Factories\ContentMediaFactory
+    protected static function newFactory(): \Core\Mod\Content\Database\Factories\ContentMediaFactory
     {
-        return \Core\Content\Database\Factories\ContentMediaFactory::new();
+        return \Core\Mod\Content\Database\Factories\ContentMediaFactory::new();
     }
 
     protected $table = 'content_media';

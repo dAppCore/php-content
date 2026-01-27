@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Models;
+namespace Core\Mod\Content\Models;
 
 use Mod\Agentic\Models\Prompt;
 use Core\Mod\Tenant\Models\Workspace;

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Services;
+namespace Core\Mod\Content\Services;
 
 use Core\Front\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
-use Core\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentItem;
 use Core\Mod\Tenant\Models\Workspace;
 
 /**

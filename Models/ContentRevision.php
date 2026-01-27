@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Models;
+namespace Core\Mod\Content\Models;
 
 use Core\Mod\Tenant\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

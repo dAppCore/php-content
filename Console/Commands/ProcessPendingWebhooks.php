@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Console\Commands;
+namespace Core\Mod\Content\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Core\Content\Services\WebhookRetryService;
+use Core\Mod\Content\Services\WebhookRetryService;
 
 /**
  * ProcessPendingWebhooks

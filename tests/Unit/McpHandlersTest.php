@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Tests\Unit;
+namespace Core\Mod\Content\Tests\Unit;
 
 use Core\Front\Mcp\Contracts\McpToolHandler;
-use Core\Content\Mcp\Handlers\ContentCreateHandler;
-use Core\Content\Mcp\Handlers\ContentDeleteHandler;
-use Core\Content\Mcp\Handlers\ContentListHandler;
-use Core\Content\Mcp\Handlers\ContentReadHandler;
-use Core\Content\Mcp\Handlers\ContentSearchHandler;
-use Core\Content\Mcp\Handlers\ContentTaxonomiesHandler;
-use Core\Content\Mcp\Handlers\ContentUpdateHandler;
+use Core\Mod\Content\Mcp\Handlers\ContentCreateHandler;
+use Core\Mod\Content\Mcp\Handlers\ContentDeleteHandler;
+use Core\Mod\Content\Mcp\Handlers\ContentListHandler;
+use Core\Mod\Content\Mcp\Handlers\ContentReadHandler;
+use Core\Mod\Content\Mcp\Handlers\ContentSearchHandler;
+use Core\Mod\Content\Mcp\Handlers\ContentTaxonomiesHandler;
+use Core\Mod\Content\Mcp\Handlers\ContentUpdateHandler;
 use PHPUnit\Framework\TestCase;
 
 /**

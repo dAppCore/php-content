@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Models;
+namespace Core\Mod\Content\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,9 +20,9 @@ class AIUsage extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): \Core\Content\Database\Factories\AIUsageFactory
+    protected static function newFactory(): \Core\Mod\Content\Database\Factories\AIUsageFactory
     {
-        return \Core\Content\Database\Factories\AIUsageFactory::new();
+        return \Core\Mod\Content\Database\Factories\AIUsageFactory::new();
     }
 
     protected $table = 'ai_usage';

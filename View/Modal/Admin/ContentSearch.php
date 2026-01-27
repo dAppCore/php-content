@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\View\Modal\Admin;
+namespace Core\Mod\Content\View\Modal\Admin;
 
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentTaxonomy;
-use Core\Content\Services\ContentSearchService;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentTaxonomy;
+use Core\Mod\Content\Services\ContentSearchService;
 
 /**
  * Content Search Livewire Component

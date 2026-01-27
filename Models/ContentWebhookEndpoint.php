@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Models;
+namespace Core\Mod\Content\Models;
 
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,9 +35,9 @@ class ContentWebhookEndpoint extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): \Core\Content\Database\Factories\ContentWebhookEndpointFactory
+    protected static function newFactory(): \Core\Mod\Content\Database\Factories\ContentWebhookEndpointFactory
     {
-        return \Core\Content\Database\Factories\ContentWebhookEndpointFactory::new();
+        return \Core\Mod\Content\Database\Factories\ContentWebhookEndpointFactory::new();
     }
 
     protected $table = 'content_webhook_endpoints';

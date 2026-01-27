@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Console\Commands;
+namespace Core\Mod\Content\Console\Commands;
 
-use Core\Content\Enums\ContentType;
-use Core\Content\Models\ContentAuthor;
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentMedia;
-use Core\Content\Models\ContentTaxonomy;
+use Core\Mod\Content\Enums\ContentType;
+use Core\Mod\Content\Models\ContentAuthor;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentMedia;
+use Core\Mod\Content\Models\ContentTaxonomy;
 use Core\Mod\Tenant\Models\Workspace;
 use Carbon\Carbon;
 use Illuminate\Console\Command;

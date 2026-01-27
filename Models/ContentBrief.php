@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Models;
+namespace Core\Mod\Content\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Core\Content\Enums\BriefContentType;
+use Core\Mod\Content\Enums\BriefContentType;
 use Core\Mod\Tenant\Models\Workspace;
 
 /**
@@ -23,9 +23,9 @@ class ContentBrief extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): \Core\Content\Database\Factories\ContentBriefFactory
+    protected static function newFactory(): \Core\Mod\Content\Database\Factories\ContentBriefFactory
     {
-        return \Core\Content\Database\Factories\ContentBriefFactory::new();
+        return \Core\Mod\Content\Database\Factories\ContentBriefFactory::new();
     }
 
     public const STATUS_PENDING = 'pending';

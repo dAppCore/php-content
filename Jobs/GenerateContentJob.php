@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Jobs;
+namespace Core\Mod\Content\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,8 +10,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Core\Content\Models\ContentBrief;
-use Core\Content\Services\AIGatewayService;
+use Core\Mod\Content\Models\ContentBrief;
+use Core\Mod\Content\Services\AIGatewayService;
 
 /**
  * GenerateContentJob

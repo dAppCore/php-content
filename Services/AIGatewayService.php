@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Services;
+namespace Core\Mod\Content\Services;
 
 use Mod\Agentic\Services\AgenticResponse;
 use Mod\Agentic\Services\ClaudeService;
 use Mod\Agentic\Services\GeminiService;
-use Core\Content\Models\AIUsage;
-use Core\Content\Models\ContentBrief;
+use Core\Mod\Content\Models\AIUsage;
+use Core\Mod\Content\Models\ContentBrief;
 use RuntimeException;
 
 /**

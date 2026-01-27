@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Controllers\Api;
+namespace Core\Mod\Content\Controllers\Api;
 
 use Core\Front\Controller;
 use Core\Mod\Api\Concerns\HasApiResponses;
@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Core\Content\Models\ContentMedia;
+use Core\Mod\Content\Models\ContentMedia;
 
 /**
  * Content Media API Controller

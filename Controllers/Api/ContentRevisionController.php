@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Controllers\Api;
+namespace Core\Mod\Content\Controllers\Api;
 
 use Core\Front\Controller;
 use Core\Mod\Api\Concerns\HasApiResponses;
 use Core\Mod\Api\Concerns\ResolvesWorkspace;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentRevision;
-use Core\Content\Resources\ContentRevisionResource;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentRevision;
+use Core\Mod\Content\Resources\ContentRevisionResource;
 
 /**
  * Content Revision API Controller

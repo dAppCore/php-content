@@ -14,18 +14,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Core\\Content\\": ""
+            "Core\\Mod\\Content\\": ""
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Core\\Content\\Tests\\": "Tests/"
+            "Core\\Mod\\Content\\Tests\\": "Tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Core\\Content\\Boot"
+                "Core\\Mod\\Content\\Boot"
             ]
         }
     },

@@ -1,10 +1,10 @@
 <?php
 
-use Core\Content\Models\ContentAuthor;
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentMedia;
-use Core\Content\Models\ContentTaxonomy;
-use Core\Content\Models\ContentWebhookLog;
+use Core\Mod\Content\Models\ContentAuthor;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentMedia;
+use Core\Mod\Content\Models\ContentTaxonomy;
+use Core\Mod\Content\Models\ContentWebhookLog;
 use Core\Mod\Tenant\Models\Workspace;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);

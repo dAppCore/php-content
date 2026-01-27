@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Middleware;
+namespace Core\Mod\Content\Middleware;
 
-use Core\Content\Services\ContentRender;
+use Core\Mod\Content\Services\ContentRender;
 use Core\Mod\Tenant\Models\Workspace;
 use Closure;
 use Illuminate\Http\Request;

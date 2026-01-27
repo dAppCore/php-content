@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Mcp\Handlers;
+namespace Core\Mod\Content\Mcp\Handlers;
 
 use Core\Front\Mcp\Contracts\McpToolHandler;
 use Core\Front\Mcp\McpContext;
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Support\Facades\Auth;
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentRevision;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentRevision;
 
 /**
  * MCP tool handler for deleting content items.

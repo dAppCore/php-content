@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Tests\Unit;
+namespace Core\Mod\Content\Tests\Unit;
 
-use Core\Content\Models\ContentWebhookEndpoint;
+use Core\Mod\Content\Models\ContentWebhookEndpoint;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 

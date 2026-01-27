@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Enums;
+namespace Core\Mod\Content\Enums;
 
 /**
  * Content source type for ContentItem.

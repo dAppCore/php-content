@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Mcp\Handlers;
+namespace Core\Mod\Content\Mcp\Handlers;
 
 use Carbon\Carbon;
 use Core\Front\Mcp\Contracts\McpToolHandler;
@@ -10,9 +10,9 @@ use Core\Front\Mcp\McpContext;
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentRevision;
-use Core\Content\Models\ContentTaxonomy;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentRevision;
+use Core\Mod\Content\Models\ContentTaxonomy;
 
 /**
  * MCP tool handler for updating content items.

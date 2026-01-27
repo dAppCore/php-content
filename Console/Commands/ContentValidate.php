@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Console\Commands;
+namespace Core\Mod\Content\Console\Commands;
 
 use Mod\Agentic\Services\ContentService;
 use Illuminate\Console\Command;

@@ -1,7 +1,7 @@
 <?php
 
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentRevision;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentRevision;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 

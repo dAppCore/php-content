@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content;
+namespace Core\Mod\Content;
 
 use Core\Events\ApiRoutesRegistering;
 use Core\Events\ConsoleBooting;

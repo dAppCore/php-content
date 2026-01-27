@@ -10,13 +10,13 @@ declare(strict_types=1);
  */
 
 use Illuminate\Support\Facades\Route;
-use Core\Content\Controllers\Api\ContentBriefController;
-use Core\Content\Controllers\Api\ContentMediaController;
-use Core\Content\Controllers\Api\ContentRevisionController;
-use Core\Content\Controllers\Api\ContentSearchController;
-use Core\Content\Controllers\Api\ContentWebhookController;
-use Core\Content\Controllers\Api\GenerationController;
-use Core\Content\Controllers\ContentPreviewController;
+use Core\Mod\Content\Controllers\Api\ContentBriefController;
+use Core\Mod\Content\Controllers\Api\ContentMediaController;
+use Core\Mod\Content\Controllers\Api\ContentRevisionController;
+use Core\Mod\Content\Controllers\Api\ContentSearchController;
+use Core\Mod\Content\Controllers\Api\ContentWebhookController;
+use Core\Mod\Content\Controllers\Api\GenerationController;
+use Core\Mod\Content\Controllers\ContentPreviewController;
 
 /*
 |--------------------------------------------------------------------------

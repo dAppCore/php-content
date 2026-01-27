@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Models;
+namespace Core\Mod\Content\Models;
 
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,9 +14,9 @@ class ContentTaxonomy extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): \Core\Content\Database\Factories\ContentTaxonomyFactory
+    protected static function newFactory(): \Core\Mod\Content\Database\Factories\ContentTaxonomyFactory
     {
-        return \Core\Content\Database\Factories\ContentTaxonomyFactory::new();
+        return \Core\Mod\Content\Database\Factories\ContentTaxonomyFactory::new();
     }
 
     protected $fillable = [

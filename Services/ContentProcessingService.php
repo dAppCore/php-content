@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Services;
+namespace Core\Mod\Content\Services;
 
 use DOMDocument;
 use DOMElement;

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Mcp\Handlers;
+namespace Core\Mod\Content\Mcp\Handlers;
 
 use Core\Front\Mcp\Contracts\McpToolHandler;
 use Core\Front\Mcp\McpContext;
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Support\Str;
-use Core\Content\Services\ContentSearchService;
+use Core\Mod\Content\Services\ContentSearchService;
 
 /**
  * MCP tool handler for searching content.

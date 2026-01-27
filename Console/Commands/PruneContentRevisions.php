@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Console\Commands;
+namespace Core\Mod\Content\Console\Commands;
 
 use Illuminate\Console\Command;
-use Core\Content\Models\ContentRevision;
+use Core\Mod\Content\Models\ContentRevision;
 
 /**
  * Prune old content revisions based on retention policy.

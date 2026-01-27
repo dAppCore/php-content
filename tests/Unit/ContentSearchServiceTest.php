@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Tests\Unit;
+namespace Core\Mod\Content\Tests\Unit;
 
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Core\Content\Enums\ContentType;
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentTaxonomy;
-use Core\Content\Services\ContentSearchService;
+use Core\Mod\Content\Enums\ContentType;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentTaxonomy;
+use Core\Mod\Content\Services\ContentSearchService;
 use Tests\TestCase;
 
 /**

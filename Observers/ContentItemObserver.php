@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Observers;
+namespace Core\Mod\Content\Observers;
 
 use Illuminate\Support\Facades\Log;
-use Core\Content\Models\ContentItem;
-use Core\Content\Services\CdnPurgeService;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Services\CdnPurgeService;
 
 /**
  * Content Item Observer - handles CDN cache purging on content changes.

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Tests\Unit;
+namespace Core\Mod\Content\Tests\Unit;
 
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Support\Facades\Queue;
-use Core\Content\Enums\ContentType;
-use Core\Content\Jobs\ProcessContentWebhook;
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentWebhookEndpoint;
-use Core\Content\Models\ContentWebhookLog;
+use Core\Mod\Content\Enums\ContentType;
+use Core\Mod\Content\Jobs\ProcessContentWebhook;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentWebhookEndpoint;
+use Core\Mod\Content\Models\ContentWebhookLog;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 

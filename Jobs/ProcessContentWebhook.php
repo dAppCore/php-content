@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Jobs;
+namespace Core\Mod\Content\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,12 +10,12 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Core\Content\Enums\ContentType;
-use Core\Content\Models\ContentItem;
-use Core\Content\Models\ContentMedia;
-use Core\Content\Models\ContentTaxonomy;
-use Core\Content\Models\ContentWebhookEndpoint;
-use Core\Content\Models\ContentWebhookLog;
+use Core\Mod\Content\Enums\ContentType;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentMedia;
+use Core\Mod\Content\Models\ContentTaxonomy;
+use Core\Mod\Content\Models\ContentWebhookEndpoint;
+use Core\Mod\Content\Models\ContentWebhookLog;
 
 /**
  * Process incoming content webhooks.

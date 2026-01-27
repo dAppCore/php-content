@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Models;
+namespace Core\Mod\Content\Models;
 
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +13,9 @@ class ContentWebhookLog extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): \Core\Content\Database\Factories\ContentWebhookLogFactory
+    protected static function newFactory(): \Core\Mod\Content\Database\Factories\ContentWebhookLogFactory
     {
-        return \Core\Content\Database\Factories\ContentWebhookLogFactory::new();
+        return \Core\Mod\Content\Database\Factories\ContentWebhookLogFactory::new();
     }
 
     protected $fillable = [

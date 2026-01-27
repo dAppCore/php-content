@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Controllers\Api;
+namespace Core\Mod\Content\Controllers\Api;
 
 use Core\Front\Controller;
 use Core\Mod\Api\Concerns\HasApiResponses;
 use Core\Mod\Api\Concerns\ResolvesWorkspace;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Core\Content\Services\ContentSearchService;
+use Core\Mod\Content\Services\ContentSearchService;
 
 /**
  * Content Search API Controller

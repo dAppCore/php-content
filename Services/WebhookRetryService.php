@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Services;
+namespace Core\Mod\Content\Services;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
-use Core\Content\Models\ContentWebhookLog;
+use Core\Mod\Content\Models\ContentWebhookLog;
 
 /**
  * WebhookRetryService

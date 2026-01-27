@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Services;
+namespace Core\Mod\Content\Services;
 
 use Illuminate\Support\Facades\Log;
-use Core\Content\Models\ContentItem;
+use Core\Mod\Content\Models\ContentItem;
 use Plug\Cdn\CdnManager;
 use Plug\Response;
 

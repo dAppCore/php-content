@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Concerns;
+namespace Core\Mod\Content\Concerns;
 
 /**
  * Trait for making ContentItem searchable with Laravel Scout.

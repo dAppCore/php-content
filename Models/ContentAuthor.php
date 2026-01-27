@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Content\Models;
+namespace Core\Mod\Content\Models;
 
 use Core\Mod\Tenant\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,9 +14,9 @@ class ContentAuthor extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): \Core\Content\Database\Factories\ContentAuthorFactory
+    protected static function newFactory(): \Core\Mod\Content\Database\Factories\ContentAuthorFactory
     {
-        return \Core\Content\Database\Factories\ContentAuthorFactory::new();
+        return \Core\Mod\Content\Database\Factories\ContentAuthorFactory::new();
     }
 
     protected $fillable = [
