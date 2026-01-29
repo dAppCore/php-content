@@ -71,12 +71,83 @@ class ContentWebhookEndpointTest extends TestCase
     }
 
     #[Test]
-    public function it_allows_webhook_without_secret(): void
+    public function it_rejects_webhook_without_secret_when_signature_required(): void
     {
-        $endpoint = ContentWebhookEndpoint::factory()->noSecret()->create();
+        $endpoint = ContentWebhookEndpoint::factory()->create([
+            'secret' => null,
+            'require_signature' => true,
+        ]);
 
-        // When no secret, verification should pass
-        $this->assertTrue($endpoint->verifySignature('any payload', null));
+        // When signature is required but no secret configured, verification should fail
+        $result = $endpoint->verifySignatureWithDetails('any payload', null);
+
+        $this->assertFalse($result['verified']);
+        $this->assertEquals(ContentWebhookEndpoint::SIGNATURE_FAILURE_NO_SECRET, $result['reason']);
+    }
+
+    #[Test]
+    public function it_allows_webhook_without_secret_when_signature_not_required(): void
+    {
+        $endpoint = ContentWebhookEndpoint::factory()->create([
+            'secret' => null,
+            'require_signature' => false,
+        ]);
+
+        // When signature is not required and no secret, verification should pass
+        $result = $endpoint->verifySignatureWithDetails('any payload', null);
+
+        $this->assertTrue($result['verified']);
+        $this->assertEquals(ContentWebhookEndpoint::SIGNATURE_SUCCESS_NOT_REQUIRED, $result['reason']);
+    }
+
+    #[Test]
+    public function it_provides_detailed_verification_result_on_success(): void
+    {
+        $endpoint = ContentWebhookEndpoint::factory()->create([
+            'secret' => 'test-secret-key',
+        ]);
+
+        $payload = '{"event": "test"}';
+        $signature = hash_hmac('sha256', $payload, 'test-secret-key');
+
+        $result = $endpoint->verifySignatureWithDetails($payload, $signature);
+
+        $this->assertTrue($result['verified']);
+        $this->assertEquals(ContentWebhookEndpoint::SIGNATURE_SUCCESS, $result['reason']);
+    }
+
+    #[Test]
+    public function it_provides_detailed_verification_result_on_missing_signature(): void
+    {
+        $endpoint = ContentWebhookEndpoint::factory()->create([
+            'secret' => 'test-secret-key',
+        ]);
+
+        $result = $endpoint->verifySignatureWithDetails('{"event": "test"}', null);
+
+        $this->assertFalse($result['verified']);
+        $this->assertEquals(ContentWebhookEndpoint::SIGNATURE_FAILURE_MISSING, $result['reason']);
+    }
+
+    #[Test]
+    public function it_provides_detailed_verification_result_on_invalid_signature(): void
+    {
+        $endpoint = ContentWebhookEndpoint::factory()->create([
+            'secret' => 'test-secret-key',
+        ]);
+
+        $result = $endpoint->verifySignatureWithDetails('{"event": "test"}', 'invalid-signature');
+
+        $this->assertFalse($result['verified']);
+        $this->assertEquals(ContentWebhookEndpoint::SIGNATURE_FAILURE_INVALID, $result['reason']);
+    }
+
+    #[Test]
+    public function it_defaults_require_signature_to_true(): void
+    {
+        $endpoint = ContentWebhookEndpoint::factory()->create();
+
+        $this->assertTrue($endpoint->requiresSignature());
     }
 
     #[Test]

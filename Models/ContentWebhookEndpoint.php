@@ -47,6 +47,7 @@ class ContentWebhookEndpoint extends Model
         'workspace_id',
         'name',
         'secret',
+        'require_signature',
         'previous_secret',
         'secret_rotated_at',
         'grace_period_seconds',
@@ -59,6 +60,7 @@ class ContentWebhookEndpoint extends Model
     protected $casts = [
         'allowed_types' => 'array',
         'is_enabled' => 'boolean',
+        'require_signature' => 'boolean',
         'failure_count' => 'integer',
         'last_received_at' => 'datetime',
         'secret' => 'encrypted',
@@ -192,6 +194,100 @@ class ContentWebhookEndpoint extends Model
     // -------------------------------------------------------------------------
 
     /**
+     * Signature verification failure reasons.
+     */
+    public const SIGNATURE_FAILURE_NO_SECRET = 'no_secret_configured';
+
+    public const SIGNATURE_FAILURE_NOT_REQUIRED = 'signature_not_required';
+
+    public const SIGNATURE_FAILURE_MISSING = 'signature_missing';
+
+    public const SIGNATURE_FAILURE_INVALID = 'signature_invalid';
+
+    public const SIGNATURE_SUCCESS = 'verified';
+
+    public const SIGNATURE_SUCCESS_GRACE = 'verified_grace_period';
+
+    public const SIGNATURE_SUCCESS_NOT_REQUIRED = 'not_required';
+
+    /**
+     * Verify webhook signature with detailed result.
+     *
+     * Supports multiple signature formats:
+     * - X-Signature: HMAC-SHA256 signature of the raw body
+     * - X-Hub-Signature-256: GitHub-style sha256=... format
+     * - X-WP-Webhook-Signature: WordPress webhook signature
+     *
+     * During a grace period after secret rotation, both current and
+     * previous secrets are accepted to avoid breaking integrations.
+     *
+     * @param  string  $payload  The raw request body
+     * @param  string|null  $signature  The signature from request header
+     * @return array{verified: bool, reason: string} Verification result with reason
+     */
+    public function verifySignatureWithDetails(string $payload, ?string $signature): array
+    {
+        // Check if signature is required
+        $requireSignature = $this->require_signature ?? true;
+
+        // If no secret configured
+        if (empty($this->secret)) {
+            if ($requireSignature) {
+                // Security: reject if signature is required but no secret configured
+                return [
+                    'verified' => false,
+                    'reason' => self::SIGNATURE_FAILURE_NO_SECRET,
+                ];
+            }
+
+            // Signature explicitly not required - allow through but log
+            return [
+                'verified' => true,
+                'reason' => self::SIGNATURE_SUCCESS_NOT_REQUIRED,
+            ];
+        }
+
+        // Signature required when secret is set
+        if (empty($signature)) {
+            return [
+                'verified' => false,
+                'reason' => self::SIGNATURE_FAILURE_MISSING,
+            ];
+        }
+
+        // Normalise signature (handle sha256=... format)
+        $normalised = $signature;
+        if (str_starts_with($signature, 'sha256=')) {
+            $normalised = substr($signature, 7);
+        }
+
+        // Check against current secret
+        $expectedSignature = hash_hmac('sha256', $payload, $this->secret);
+        if (hash_equals($expectedSignature, $normalised)) {
+            return [
+                'verified' => true,
+                'reason' => self::SIGNATURE_SUCCESS,
+            ];
+        }
+
+        // Check against previous secret if in grace period
+        if ($this->isInGracePeriod() && ! empty($this->previous_secret)) {
+            $previousExpectedSignature = hash_hmac('sha256', $payload, $this->previous_secret);
+            if (hash_equals($previousExpectedSignature, $normalised)) {
+                return [
+                    'verified' => true,
+                    'reason' => self::SIGNATURE_SUCCESS_GRACE,
+                ];
+            }
+        }
+
+        return [
+            'verified' => false,
+            'reason' => self::SIGNATURE_FAILURE_INVALID,
+        ];
+    }
+
+    /**
      * Verify webhook signature.
      *
      * Supports multiple signature formats:
@@ -201,39 +297,20 @@ class ContentWebhookEndpoint extends Model
      *
      * During a grace period after secret rotation, both current and
      * previous secrets are accepted to avoid breaking integrations.
+     *
+     * @deprecated Use verifySignatureWithDetails() for detailed failure reasons
      */
     public function verifySignature(string $payload, ?string $signature): bool
     {
-        // If no secret configured, skip verification (but log warning)
-        if (empty($this->secret)) {
-            return true;
-        }
+        return $this->verifySignatureWithDetails($payload, $signature)['verified'];
+    }
 
-        // Signature required when secret is set
-        if (empty($signature)) {
-            return false;
-        }
-
-        // Normalise signature (handle sha256=... format)
-        if (str_starts_with($signature, 'sha256=')) {
-            $signature = substr($signature, 7);
-        }
-
-        // Check against current secret
-        $expectedSignature = hash_hmac('sha256', $payload, $this->secret);
-        if (hash_equals($expectedSignature, $signature)) {
-            return true;
-        }
-
-        // Check against previous secret if in grace period
-        if ($this->isInGracePeriod() && ! empty($this->previous_secret)) {
-            $previousExpectedSignature = hash_hmac('sha256', $payload, $this->previous_secret);
-            if (hash_equals($previousExpectedSignature, $signature)) {
-                return true;
-            }
-        }
-
-        return false;
+    /**
+     * Check if this endpoint requires signature verification.
+     */
+    public function requiresSignature(): bool
+    {
+        return $this->require_signature ?? true;
     }
 
     // -------------------------------------------------------------------------

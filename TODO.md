@@ -76,11 +76,12 @@ Production quality improvements for the Content Module.
 - **Acceptance:** 80%+ coverage on AIGatewayService with edge case tests.
 
 ### TEST-002: Add tests for webhook signature verification
-- **Status:** Open
+- **Status:** Fixed
 - **Description:** `ContentWebhookEndpoint::verifySignature()` handles multiple formats but isn't fully tested.
 - **File:** `Models/ContentWebhookEndpoint.php:204-237`
 - **Fix:** Add unit tests for each signature format and grace period behaviour.
 - **Acceptance:** Tests cover: sha256= prefix, grace period rotation, empty signature handling.
+- **Resolution:** (2026-01-29) See P2-082 fix. Added comprehensive feature tests in `tests/Feature/WebhookSignatureVerificationTest.php` covering all signature formats, grace period rotation, and various failure scenarios.
 
 ### PERF-001: Add database index for content search
 - **Status:** Open
@@ -288,6 +289,39 @@ Production quality improvements for the Content Module.
 ---
 
 ## Completed
+
+### P2-082: Webhook Signature Verification (2026-01-29)
+- **Description:** Signature verification was present but not comprehensively tested or centrally logged.
+- **Resolution:**
+  - Created `Services/WebhookDeliveryLogger.php` service for centralised signature verification logging
+  - Updated `Controllers/Api/ContentWebhookController.php` to use the new service
+  - Added comprehensive feature tests in `tests/Feature/WebhookSignatureVerificationTest.php`:
+    - Tests for all signature header formats (X-Signature, X-Hub-Signature-256, X-WP-Webhook-Signature)
+    - Tests for grace period during secret rotation
+    - Tests for require_signature configuration
+    - Tests for signature failure audit logging
+    - Tests for timing-safe comparison verification
+  - Failed signature attempts are logged without storing potentially malicious payloads
+  - Security audit trail for all signature verification outcomes
+
+### P2-083: Webhook Delivery Logging (2026-01-29)
+- **Description:** Webhook delivery lacked comprehensive logging for debugging and audit purposes.
+- **Resolution:**
+  - Created `Services/WebhookDeliveryLogger.php` service with:
+    - `logSuccess()` - logs successful deliveries with duration metrics
+    - `logFailure()` - logs failed deliveries with error details
+    - `logSignatureFailure()` - creates audit entries for signature failures
+    - `logSignatureNotRequired()` - warns when verification is bypassed
+    - `createDeliveryLog()` - creates delivery log entries with full request details
+    - `getDeliveryStats()` - retrieves delivery statistics for dashboards
+    - `getRecentSignatureFailures()` - retrieves recent failures for security monitoring
+  - Added comprehensive unit tests in `tests/Unit/WebhookDeliveryLoggerTest.php`
+  - Migration `2026_01_29_000001_add_signature_verification_fields.php` adds:
+    - `signature_verified` - boolean tracking verification success
+    - `signature_failure_reason` - stores failure reason for audit
+    - `processing_duration_ms` - tracks processing time
+    - `request_headers` - stores safe headers for debugging
+    - `response_code` and `response_body` - tracks response details
 
 ### SEC-002: HTML sanitisation fallback vulnerability (2026-01-29)
 - Created `Services/HtmlSanitiser.php` using HTMLPurifier

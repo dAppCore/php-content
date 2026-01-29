@@ -11,15 +11,27 @@ use Illuminate\Support\Facades\Log;
 use Core\Mod\Content\Jobs\ProcessContentWebhook;
 use Core\Mod\Content\Models\ContentWebhookEndpoint;
 use Core\Mod\Content\Models\ContentWebhookLog;
+use Core\Mod\Content\Services\WebhookDeliveryLogger;
 
 /**
  * Controller for receiving external content webhooks.
  *
  * Handles incoming webhooks from WordPress, CMS systems, and custom integrations.
  * Webhooks are logged and dispatched to a job for async processing.
+ *
+ * Security features (P2-082, P2-083):
+ * - HMAC-SHA256 signature verification with timing-safe comparison
+ * - Grace period support for secret rotation
+ * - Comprehensive delivery logging for audit trails
+ * - Failed signature attempts are logged without storing payload
  */
 class ContentWebhookController extends Controller
 {
+    public function __construct(
+        protected WebhookDeliveryLogger $deliveryLogger
+    ) {
+    }
+
     /**
      * Receive a webhook from an external source.
      *
@@ -50,15 +62,24 @@ class ContentWebhookController extends Controller
         // Get raw payload
         $payload = $request->getContent();
 
-        // Verify signature if secret is configured
+        // Extract signature and verify with detailed result
         $signature = $this->extractSignature($request);
-        if (! $endpoint->verifySignature($payload, $signature)) {
-            Log::warning('Content webhook signature verification failed', [
-                'endpoint_id' => $endpoint->id,
-                'source_ip' => $request->ip(),
-            ]);
+        $verificationResult = $endpoint->verifySignatureWithDetails($payload, $signature);
+
+        if (! $verificationResult['verified']) {
+            // Log the failed attempt for security audit trail (P2-082)
+            $this->deliveryLogger->logSignatureFailure(
+                $request,
+                $endpoint,
+                $verificationResult['reason']
+            );
 
             return response('Invalid signature', 401);
+        }
+
+        // Log when signature verification is explicitly bypassed (P2-082)
+        if ($verificationResult['reason'] === ContentWebhookEndpoint::SIGNATURE_SUCCESS_NOT_REQUIRED) {
+            $this->deliveryLogger->logSignatureNotRequired($request, $endpoint);
         }
 
         // Parse payload
@@ -86,23 +107,21 @@ class ContentWebhookController extends Controller
             return response('Event type not allowed', 403);
         }
 
-        // Create webhook log entry
-        $log = ContentWebhookLog::create([
-            'workspace_id' => $endpoint->workspace_id,
-            'endpoint_id' => $endpoint->id,
-            'event_type' => $eventType,
-            'wp_id' => $this->extractContentId($data),
-            'content_type' => $this->extractContentType($data),
-            'payload' => $data,
-            'status' => 'pending',
-            'source_ip' => $request->ip(),
-        ]);
+        // Create webhook log entry with full delivery details (P2-083)
+        $log = $this->deliveryLogger->createDeliveryLog(
+            $request,
+            $endpoint,
+            $data,
+            $eventType,
+            $verificationResult
+        );
 
         Log::info('Content webhook received', [
             'log_id' => $log->id,
             'endpoint_id' => $endpoint->id,
             'event_type' => $eventType,
             'workspace_id' => $endpoint->workspace_id,
+            'signature_status' => $verificationResult['reason'],
         ]);
 
         // Update endpoint last received timestamp
@@ -277,47 +296,4 @@ class ContentWebhookController extends Controller
         return 'wordpress.post_updated';
     }
 
-    /**
-     * Extract content ID from payload.
-     */
-    protected function extractContentId(array $data): ?int
-    {
-        // Try various ID field names
-        $idFields = ['post_id', 'ID', 'id', 'content_id', 'item_id'];
-
-        foreach ($idFields as $field) {
-            if (isset($data[$field])) {
-                return (int) $data[$field];
-            }
-
-            // Check nested data
-            if (isset($data['data'][$field])) {
-                return (int) $data['data'][$field];
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Extract content type from payload.
-     */
-    protected function extractContentType(array $data): ?string
-    {
-        // Try various type field names
-        $typeFields = ['post_type', 'content_type', 'type'];
-
-        foreach ($typeFields as $field) {
-            if (isset($data[$field])) {
-                return (string) $data[$field];
-            }
-
-            // Check nested data
-            if (isset($data['data'][$field])) {
-                return (string) $data['data'][$field];
-            }
-        }
-
-        return null;
-    }
 }

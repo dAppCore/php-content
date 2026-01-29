@@ -25,10 +25,16 @@ class ContentWebhookLog extends Model
         'wp_id',
         'content_type',
         'payload',
+        'request_headers',
         'status',
         'error_message',
         'source_ip',
+        'signature_verified',
+        'signature_failure_reason',
         'processed_at',
+        'processing_duration_ms',
+        'response_code',
+        'response_body',
         'retry_count',
         'max_retries',
         'next_retry_at',
@@ -37,10 +43,14 @@ class ContentWebhookLog extends Model
 
     protected $casts = [
         'payload' => 'array',
+        'request_headers' => 'array',
         'processed_at' => 'datetime',
         'next_retry_at' => 'datetime',
         'retry_count' => 'integer',
         'max_retries' => 'integer',
+        'signature_verified' => 'boolean',
+        'processing_duration_ms' => 'integer',
+        'response_code' => 'integer',
     ];
 
     /**
@@ -92,6 +102,73 @@ class ContentWebhookLog extends Model
     }
 
     /**
+     * Record signature verification result.
+     */
+    public function recordSignatureVerification(bool $verified, string $reason): void
+    {
+        $this->update([
+            'signature_verified' => $verified,
+            'signature_failure_reason' => $verified ? null : $reason,
+        ]);
+    }
+
+    /**
+     * Record processing completion with duration.
+     *
+     * @param  int  $durationMs  Processing duration in milliseconds
+     * @param  int|null  $responseCode  HTTP response code if applicable
+     * @param  string|null  $responseBody  Response body if applicable
+     */
+    public function recordProcessingComplete(
+        int $durationMs,
+        ?int $responseCode = null,
+        ?string $responseBody = null
+    ): void {
+        $this->update([
+            'processing_duration_ms' => $durationMs,
+            'response_code' => $responseCode,
+            'response_body' => $responseBody ? substr($responseBody, 0, 10000) : null, // Limit size
+        ]);
+    }
+
+    /**
+     * Mark as completed with full details.
+     */
+    public function markCompletedWithDetails(
+        int $durationMs,
+        ?int $responseCode = null,
+        ?string $responseBody = null
+    ): void {
+        $this->update([
+            'status' => 'completed',
+            'processed_at' => now(),
+            'error_message' => null,
+            'processing_duration_ms' => $durationMs,
+            'response_code' => $responseCode,
+            'response_body' => $responseBody ? substr($responseBody, 0, 10000) : null,
+        ]);
+    }
+
+    /**
+     * Mark as failed with full details.
+     */
+    public function markFailedWithDetails(
+        string $error,
+        int $durationMs,
+        ?int $responseCode = null,
+        ?string $responseBody = null
+    ): void {
+        $this->update([
+            'status' => 'failed',
+            'processed_at' => now(),
+            'error_message' => $error,
+            'processing_duration_ms' => $durationMs,
+            'response_code' => $responseCode,
+            'response_body' => $responseBody ? substr($responseBody, 0, 10000) : null,
+        ]);
+    }
+
+    /**
      * Scope to filter by workspace.
      */
     public function scopeForWorkspace($query, int $workspaceId)
@@ -113,6 +190,22 @@ class ContentWebhookLog extends Model
     public function scopeFailed($query)
     {
         return $query->where('status', 'failed');
+    }
+
+    /**
+     * Scope to webhooks with signature verification failures.
+     */
+    public function scopeSignatureFailed($query)
+    {
+        return $query->where('signature_verified', false);
+    }
+
+    /**
+     * Scope to webhooks with successful signature verification.
+     */
+    public function scopeSignatureVerified($query)
+    {
+        return $query->where('signature_verified', true);
     }
 
     /**

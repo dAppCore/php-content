@@ -59,6 +59,7 @@ class ProcessContentWebhook implements ShouldQueue
      */
     public function handle(): void
     {
+        $startTime = hrtime(true);
         $this->webhookLog->markProcessing();
 
         Log::info('Processing content webhook', [
@@ -74,7 +75,11 @@ class ProcessContentWebhook implements ShouldQueue
                 default => $this->processGeneric(),
             };
 
-            $this->webhookLog->markCompleted();
+            // Calculate processing duration in milliseconds
+            $durationMs = (int) ((hrtime(true) - $startTime) / 1_000_000);
+
+            // Mark completed with duration tracking
+            $this->webhookLog->markCompletedWithDetails($durationMs);
 
             // Reset failure count on endpoint
             if ($endpoint = $this->getEndpoint()) {
@@ -84,10 +89,13 @@ class ProcessContentWebhook implements ShouldQueue
             Log::info('Content webhook processed successfully', [
                 'log_id' => $this->webhookLog->id,
                 'event_type' => $this->webhookLog->event_type,
+                'duration_ms' => $durationMs,
                 'result' => $result,
             ]);
         } catch (\Exception $e) {
-            $this->handleFailure($e);
+            // Calculate duration even on failure
+            $durationMs = (int) ((hrtime(true) - $startTime) / 1_000_000);
+            $this->handleFailure($e, $durationMs);
             throw $e;
         }
     }
@@ -509,10 +517,16 @@ class ProcessContentWebhook implements ShouldQueue
 
     /**
      * Handle job failure.
+     *
+     * @param  int|null  $durationMs  Processing duration in milliseconds
      */
-    protected function handleFailure(\Exception $e): void
+    protected function handleFailure(\Exception $e, ?int $durationMs = null): void
     {
-        $this->webhookLog->markFailed($e->getMessage());
+        if ($durationMs !== null) {
+            $this->webhookLog->markFailedWithDetails($e->getMessage(), $durationMs);
+        } else {
+            $this->webhookLog->markFailed($e->getMessage());
+        }
 
         // Increment failure count on endpoint
         if ($endpoint = $this->getEndpoint()) {
@@ -523,6 +537,7 @@ class ProcessContentWebhook implements ShouldQueue
             'log_id' => $this->webhookLog->id,
             'event_type' => $this->webhookLog->event_type,
             'error' => $e->getMessage(),
+            'duration_ms' => $durationMs,
             'attempts' => $this->attempts(),
         ]);
     }
