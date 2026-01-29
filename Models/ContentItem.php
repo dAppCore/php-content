@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Core\Mod\Content\Enums\ContentType;
 use Core\Mod\Content\Observers\ContentItemObserver;
+use Core\Mod\Content\Services\HtmlSanitiser;
 
 #[ObservedBy([ContentItemObserver::class])]
 class ContentItem extends Model
@@ -330,6 +331,10 @@ class ContentItem extends Model
      *
      * Uses HTMLPurifier to remove XSS vectors while preserving
      * safe HTML elements like paragraphs, headings, lists, etc.
+     *
+     * SECURITY: This method uses HTMLPurifier which is a required dependency.
+     * Never fall back to strip_tags() as it does not sanitise attributes
+     * (e.g., onclick, onerror) which can still execute JavaScript.
      */
     public function getSanitisedContent(): string
     {
@@ -339,15 +344,7 @@ class ContentItem extends Model
             return '';
         }
 
-        // Use the StaticPageSanitiser if available
-        if (class_exists(\Mod\Bio\Services\StaticPageSanitiser::class)) {
-            return app(\Mod\Bio\Services\StaticPageSanitiser::class)->sanitiseHtml($content);
-        }
-
-        // Fallback: basic sanitisation using strip_tags with allowed tags
-        $allowedTags = '<p><br><strong><b><em><i><u><h1><h2><h3><h4><h5><h6><ul><ol><li><a><blockquote><pre><code><img><table><thead><tbody><tr><th><td><div><span><hr>';
-
-        return strip_tags($content, $allowedTags);
+        return app(HtmlSanitiser::class)->sanitise($content);
     }
 
     /**

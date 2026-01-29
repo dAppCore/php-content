@@ -12,6 +12,8 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Core\Mod\Content\Services\HtmlSanitiser;
+use RuntimeException;
 
 /**
  * Content Module Boot
@@ -38,12 +40,31 @@ class Boot extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/config.php', 'content');
+
+        // Register HtmlSanitiser as a singleton for performance
+        $this->app->singleton(HtmlSanitiser::class);
     }
 
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__.'/Migrations');
         $this->configureRateLimiting();
+        $this->validateSecurityDependencies();
+    }
+
+    /**
+     * Validate that security-critical dependencies are available.
+     *
+     * @throws RuntimeException If HTMLPurifier is not installed
+     */
+    protected function validateSecurityDependencies(): void
+    {
+        if (! HtmlSanitiser::isAvailable()) {
+            throw new RuntimeException(
+                'core-content requires HTMLPurifier for secure HTML sanitisation. '.
+                'Install it with: composer require ezyang/htmlpurifier'
+            );
+        }
     }
 
     /**

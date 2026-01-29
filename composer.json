@@ -5,7 +5,8 @@
     "license": "EUPL-1.2",
     "require": {
         "php": "^8.2",
-        "host-uk/core": "dev-main"
+        "host-uk/core": "dev-main",
+        "ezyang/htmlpurifier": "^4.17"
     },
     "require-dev": {
         "laravel/pint": "^1.18",
