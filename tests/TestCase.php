@@ -27,5 +27,10 @@ abstract class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
+
+        // Stub external dependencies not available in test environment
+        if (! class_exists(\Plug\Cdn\CdnManager::class)) {
+            $app->bind(\Plug\Cdn\CdnManager::class, fn () => new class {});
+        }
     }
 }

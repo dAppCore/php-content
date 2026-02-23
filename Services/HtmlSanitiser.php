@@ -97,8 +97,10 @@ class HtmlSanitiser
         $config->set('HTML.Nofollow', true);
         $config->set('HTML.TargetNoopener', true);
 
-        // Disable cache to allow custom HTML definitions
+        // Disable cache and set definition ID for custom HTML definitions
         $config->set('Cache.DefinitionImpl', null);
+        $config->set('HTML.DefinitionID', 'core-content-html5');
+        $config->set('HTML.DefinitionRev', 1);
 
         // Register HTML5 elements that HTMLPurifier doesn't know about
         if ($def = $config->maybeGetRawHTMLDefinition()) {
