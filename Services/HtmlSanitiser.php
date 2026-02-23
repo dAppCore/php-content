@@ -97,6 +97,9 @@ class HtmlSanitiser
         $config->set('HTML.Nofollow', true);
         $config->set('HTML.TargetNoopener', true);
 
+        // Allow id attributes (disabled by default in HTMLPurifier)
+        $config->set('Attr.EnableID', true);
+
         // Safe URI schemes only
         $config->set('URI.AllowedSchemes', [
             'http' => true,
