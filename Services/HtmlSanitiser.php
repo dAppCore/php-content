@@ -97,20 +97,6 @@ class HtmlSanitiser
         $config->set('HTML.Nofollow', true);
         $config->set('HTML.TargetNoopener', true);
 
-        // Disable cache and set definition ID for custom HTML definitions
-        $config->set('Cache.DefinitionImpl', null);
-        $config->set('HTML.DefinitionID', 'core-content-html5');
-        $config->set('HTML.DefinitionRev', 1);
-
-        // Register HTML5 elements that HTMLPurifier doesn't know about
-        if ($def = $config->maybeGetRawHTMLDefinition()) {
-            $def->addElement('section', 'Block', 'Flow', 'Common');
-            $def->addElement('article', 'Block', 'Flow', 'Common');
-            $def->addElement('figure', 'Block', 'Flow', 'Common');
-            $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
-            $def->addElement('mark', 'Inline', 'Inline', 'Common');
-        }
-
         // Safe URI schemes only
         $config->set('URI.AllowedSchemes', [
             'http' => true,
@@ -122,6 +108,22 @@ class HtmlSanitiser
         // Do not allow data: URIs (can contain XSS)
         $config->set('URI.DisableExternalResources', false);
         $config->set('URI.DisableResources', false);
+
+        // Disable cache and set definition ID for custom HTML definitions
+        $config->set('Cache.DefinitionImpl', null);
+        $config->set('HTML.DefinitionID', 'core-content-html5');
+        $config->set('HTML.DefinitionRev', 1);
+
+        // Register HTML5 elements that HTMLPurifier doesn't know about
+        // NOTE: maybeGetRawHTMLDefinition() finalizes the config — all
+        // $config->set() calls must come before this point.
+        if ($def = $config->maybeGetRawHTMLDefinition()) {
+            $def->addElement('section', 'Block', 'Flow', 'Common');
+            $def->addElement('article', 'Block', 'Flow', 'Common');
+            $def->addElement('figure', 'Block', 'Flow', 'Common');
+            $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
+            $def->addElement('mark', 'Inline', 'Inline', 'Common');
+        }
 
         $this->purifier = new HTMLPurifier($config);
     }
