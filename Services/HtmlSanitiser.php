@@ -97,12 +97,16 @@ class HtmlSanitiser
         $config->set('HTML.Nofollow', true);
         $config->set('HTML.TargetNoopener', true);
 
-        // Disable cache in development, enable via config in production
-        $cacheDir = config('content.purifier_cache_dir');
-        if ($cacheDir && is_dir($cacheDir) && is_writable($cacheDir)) {
-            $config->set('Cache.SerializerPath', $cacheDir);
-        } else {
-            $config->set('Cache.DefinitionImpl', null);
+        // Disable cache to allow custom HTML definitions
+        $config->set('Cache.DefinitionImpl', null);
+
+        // Register HTML5 elements that HTMLPurifier doesn't know about
+        if ($def = $config->maybeGetRawHTMLDefinition()) {
+            $def->addElement('section', 'Block', 'Flow', 'Common');
+            $def->addElement('article', 'Block', 'Flow', 'Common');
+            $def->addElement('figure', 'Block', 'Flow', 'Common');
+            $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
+            $def->addElement('mark', 'Inline', 'Inline', 'Common');
         }
 
         // Safe URI schemes only

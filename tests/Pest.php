@@ -2,6 +2,4 @@
 
 declare(strict_types=1);
 
-use Orchestra\Testbench\TestCase;
-
-uses(TestCase::class)->in('Feature', 'Unit');
+uses(Tests\TestCase::class)->in('Feature', 'Unit');
