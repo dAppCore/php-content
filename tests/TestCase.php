@@ -30,11 +30,27 @@ abstract class TestCase extends BaseTestCase
 
         // Stub external dependencies not available in test environment
         if (! class_exists(\Plug\Cdn\CdnManager::class)) {
-            $app->bind(\Core\Mod\Content\Services\CdnPurgeService::class, fn () => new class {
-                public function isEnabled(): bool { return false; }
-                public function purgeContent($content) { return null; }
-                public function purgeUrls(array $urls) { return null; }
-                public function purgeWorkspace(string $uuid) { return null; }
+            $app->bind(\Core\Mod\Content\Services\CdnPurgeService::class, fn () => new class
+            {
+                public function isEnabled(): bool
+                {
+                    return false;
+                }
+
+                public function purgeContent($content)
+                {
+                    return null;
+                }
+
+                public function purgeUrls(array $urls)
+                {
+                    return null;
+                }
+
+                public function purgeWorkspace(string $uuid)
+                {
+                    return null;
+                }
             });
         }
     }
