@@ -1,7 +1,12 @@
 {
     "name": "host-uk/core-content",
     "description": "Content management and headless CMS for Laravel",
-    "keywords": ["laravel", "content", "cms", "headless"],
+    "keywords": [
+        "laravel",
+        "content",
+        "cms",
+        "headless"
+    ],
     "license": "EUPL-1.2",
     "require": {
         "php": "^8.2",
@@ -20,7 +25,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Core\\Mod\\Content\\Tests\\": "Tests/"
+            "Core\\Mod\\Content\\Tests\\": "Tests/",
+            "Tests\\": "tests/"
         }
     },
     "extra": {
@@ -41,5 +47,12 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "name": "core",
+            "type": "path",
+            "url": "../php-framework"
+        }
+    ]
 }
