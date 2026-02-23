@@ -6,9 +6,9 @@ namespace Core\Mod\Content\Mcp\Handlers;
 
 use Core\Front\Mcp\Contracts\McpToolHandler;
 use Core\Front\Mcp\McpContext;
+use Core\Mod\Content\Models\ContentItem;
 use Core\Tenant\Models\Workspace;
 use Illuminate\Support\Str;
-use Core\Mod\Content\Models\ContentItem;
 
 /**
  * MCP tool handler for listing content items.

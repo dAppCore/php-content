@@ -7,14 +7,14 @@ namespace Core\Mod\Content\Mcp\Handlers;
 use Carbon\Carbon;
 use Core\Front\Mcp\Contracts\McpToolHandler;
 use Core\Front\Mcp\McpContext;
-use Core\Tenant\Models\Workspace;
-use Core\Tenant\Services\EntitlementService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Core\Mod\Content\Enums\ContentType;
 use Core\Mod\Content\Models\ContentItem;
 use Core\Mod\Content\Models\ContentRevision;
 use Core\Mod\Content\Models\ContentTaxonomy;
+use Core\Tenant\Models\Workspace;
+use Core\Tenant\Services\EntitlementService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 /**
  * MCP tool handler for creating content items.

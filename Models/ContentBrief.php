@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Models;
 
+use Core\Mod\Content\Enums\BriefContentType;
+use Core\Tenant\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Core\Mod\Content\Enums\BriefContentType;
-use Core\Tenant\Models\Workspace;
 
 /**
  * ContentBrief Model

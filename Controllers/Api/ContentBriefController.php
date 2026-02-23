@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Controllers\Api;
 
-use Core\Front\Controller;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Core\Api\Concerns\HasApiResponses;
 use Core\Api\Concerns\ResolvesWorkspace;
+use Core\Front\Controller;
 use Core\Mod\Content\Models\ContentBrief;
 use Core\Mod\Content\Resources\ContentBriefResource;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Content Brief API Controller

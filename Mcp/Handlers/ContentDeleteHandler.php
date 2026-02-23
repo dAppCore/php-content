@@ -6,10 +6,10 @@ namespace Core\Mod\Content\Mcp\Handlers;
 
 use Core\Front\Mcp\Contracts\McpToolHandler;
 use Core\Front\Mcp\McpContext;
-use Core\Tenant\Models\Workspace;
-use Illuminate\Support\Facades\Auth;
 use Core\Mod\Content\Models\ContentItem;
 use Core\Mod\Content\Models\ContentRevision;
+use Core\Tenant\Models\Workspace;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * MCP tool handler for deleting content items.

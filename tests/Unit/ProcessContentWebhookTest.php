@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Tests\Unit;
 
-use Core\Tenant\Models\Workspace;
-use Illuminate\Support\Facades\Queue;
 use Core\Mod\Content\Enums\ContentType;
 use Core\Mod\Content\Jobs\ProcessContentWebhook;
 use Core\Mod\Content\Models\ContentItem;
 use Core\Mod\Content\Models\ContentWebhookEndpoint;
 use Core\Mod\Content\Models\ContentWebhookLog;
+use Core\Tenant\Models\Workspace;
+use Illuminate\Support\Facades\Queue;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 

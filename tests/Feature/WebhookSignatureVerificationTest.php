@@ -8,7 +8,6 @@ use Core\Mod\Content\Models\ContentWebhookEndpoint;
 use Core\Mod\Content\Models\ContentWebhookLog;
 use Core\Tenant\Models\Workspace;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -74,7 +73,7 @@ class WebhookSignatureVerificationTest extends TestCase
     public function it_accepts_github_style_signature(): void
     {
         $payload = json_encode(['ID' => 456, 'post_title' => 'GitHub Style']);
-        $signature = 'sha256=' . hash_hmac('sha256', $payload, 'test-webhook-secret-key');
+        $signature = 'sha256='.hash_hmac('sha256', $payload, 'test-webhook-secret-key');
 
         $response = $this->postJson(
             "/api/content/webhooks/{$this->endpoint->uuid}",
@@ -525,7 +524,7 @@ class WebhookSignatureVerificationTest extends TestCase
         $response2 = $this->postJson(
             "/api/content/webhooks/{$this->endpoint->uuid}",
             json_decode($payload, true),
-            ['X-Signature' => 'a' . substr($validSignature, 1), 'X-Event-Type' => 'post.updated']
+            ['X-Signature' => 'a'.substr($validSignature, 1), 'X-Event-Type' => 'post.updated']
         );
         $response2->assertStatus(401);
 
