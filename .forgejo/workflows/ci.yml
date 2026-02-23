@@ -30,15 +30,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Cloning php-framework into ../php-framework"
-          git clone --depth 1 \
-            "https://x-access-token:${GITHUB_TOKEN}@forge.lthn.ai/core/php-framework.git" \
-            ../php-framework
-          ls -la ../php-framework/composer.json
+          for pkg in php-framework php-tenant; do
+            echo "Cloning $pkg into ../$pkg"
+            git clone --depth 1 \
+              "https://x-access-token:${GITHUB_TOKEN}@forge.lthn.ai/core/${pkg}.git" \
+              ../$pkg
+          done
+          ls -la ../php-framework/composer.json ../php-tenant/composer.json
 
       - name: Configure path repositories
         run: |
           composer config repositories.core path ../php-framework --no-interaction
+          composer config repositories.tenant path ../php-tenant --no-interaction
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction --no-progress

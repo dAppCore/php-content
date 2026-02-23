@@ -11,6 +11,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app): array
     {
         return [
+            \Core\Tenant\Boot::class,
             \Core\Mod\Content\Boot::class,
         ];
     }
