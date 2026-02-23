@@ -23,7 +23,7 @@ class ContentItemFactory extends Factory
             'slug' => $this->faker->slug(),
             'title' => $this->faker->sentence(),
             'excerpt' => $this->faker->paragraph(),
-            'content_html' => '<p>' . $this->faker->paragraphs(3, true) . '</p>',
+            'content_html' => '<p>'.$this->faker->paragraphs(3, true).'</p>',
         ];
     }
 }
