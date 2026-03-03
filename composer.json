@@ -1,5 +1,5 @@
 {
-    "name": "host-uk/core-content",
+    "name": "core/php-content",
     "description": "Content management and headless CMS for Laravel",
     "keywords": [
         "laravel",
@@ -10,14 +10,14 @@
     "license": "EUPL-1.2",
     "require": {
         "php": "^8.2",
-        "host-uk/core": "dev-main",
+        "core/php-framework": "dev-main",
         "ezyang/htmlpurifier": "^4.17"
     },
     "require-dev": {
         "laravel/pint": "^1.18",
         "orchestra/testbench": "^9.0|^10.0",
         "pestphp/pest": "^3.0",
-        "host-uk/core-tenant": "@dev"
+        "core/php-tenant": "@dev"
     },
     "autoload": {
         "psr-4": {
