@@ -1,5 +1,5 @@
 {
-    "name": "core/php-content",
+    "name": "lthn/php-content",
     "description": "Content management and headless CMS for Laravel",
     "keywords": [
         "laravel",
@@ -10,7 +10,7 @@
     "license": "EUPL-1.2",
     "require": {
         "php": "^8.2",
-        "core/php": "*",
+        "lthn/php": "*",
         "ezyang/htmlpurifier": "^4.17"
     },
     "require-dev": {
@@ -55,5 +55,8 @@
             "type": "path",
             "url": "../php-framework"
         }
-    ]
+    ],
+    "replace": {
+        "core/php-content": "self.version"
+    }
 }
