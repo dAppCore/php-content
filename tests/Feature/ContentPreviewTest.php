@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Tests\Feature;
 
-use Core\Tenant\Models\User;
-use Core\Tenant\Models\Workspace;
 use Core\Mod\Content\Enums\ContentType;
 use Core\Mod\Content\Models\ContentItem;
+use Core\Tenant\Models\User;
+use Core\Tenant\Models\Workspace;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 

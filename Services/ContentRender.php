@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Core\Mod\Content\Services;
 
 use Core\Front\Controller;
+use Core\Mod\Content\Models\ContentItem;
+use Core\Tenant\Models\Workspace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
-use Core\Mod\Content\Models\ContentItem;
-use Core\Tenant\Models\Workspace;
 
 /**
  * ContentRender - Public workspace frontend renderer.

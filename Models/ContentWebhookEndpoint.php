@@ -377,12 +377,12 @@ class ContentWebhookEndpoint extends Model
      */
     public function getStatusColorAttribute(): string
     {
-        if (! $this->is_enabled) {
-            return 'zinc';
-        }
-
         if ($this->isCircuitBroken()) {
             return 'red';
+        }
+
+        if (! $this->is_enabled) {
+            return 'zinc';
         }
 
         if ($this->failure_count > 0) {
@@ -397,12 +397,12 @@ class ContentWebhookEndpoint extends Model
      */
     public function getStatusLabelAttribute(): string
     {
-        if (! $this->is_enabled) {
-            return 'Disabled';
-        }
-
         if ($this->isCircuitBroken()) {
             return 'Circuit Open';
+        }
+
+        if (! $this->is_enabled) {
+            return 'Disabled';
         }
 
         if ($this->failure_count > 0) {

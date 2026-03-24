@@ -1,17 +1,23 @@
 {
-    "name": "host-uk/core-content",
+    "name": "lthn/php-content",
     "description": "Content management and headless CMS for Laravel",
-    "keywords": ["laravel", "content", "cms", "headless"],
+    "keywords": [
+        "laravel",
+        "content",
+        "cms",
+        "headless"
+    ],
     "license": "EUPL-1.2",
     "require": {
         "php": "^8.2",
-        "host-uk/core": "dev-main",
+        "lthn/php": "*",
         "ezyang/htmlpurifier": "^4.17"
     },
     "require-dev": {
         "laravel/pint": "^1.18",
         "orchestra/testbench": "^9.0|^10.0",
-        "pestphp/pest": "^3.0"
+        "pestphp/pest": "^3.0",
+        "core/php-tenant": "@dev"
     },
     "autoload": {
         "psr-4": {
@@ -20,7 +26,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Core\\Mod\\Content\\Tests\\": "Tests/"
+            "Core\\Mod\\Content\\Tests\\": "Tests/",
+            "Tests\\": "tests/"
         }
     },
     "extra": {
@@ -41,5 +48,15 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "name": "core",
+            "type": "path",
+            "url": "../php-framework"
+        }
+    ],
+    "replace": {
+        "core/php-content": "self.version"
+    }
 }

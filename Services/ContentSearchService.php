@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Core\Mod\Content\Services;
 
 use Carbon\Carbon;
+use Core\Mod\Content\Models\ContentItem;
 use Core\Tenant\Models\Workspace;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Core\Mod\Content\Models\ContentItem;
 
 /**
  * Content Search Service

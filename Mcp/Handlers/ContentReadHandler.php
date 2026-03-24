@@ -6,8 +6,8 @@ namespace Core\Mod\Content\Mcp\Handlers;
 
 use Core\Front\Mcp\Contracts\McpToolHandler;
 use Core\Front\Mcp\McpContext;
-use Core\Tenant\Models\Workspace;
 use Core\Mod\Content\Models\ContentItem;
+use Core\Tenant\Models\Workspace;
 
 /**
  * MCP tool handler for reading content items.

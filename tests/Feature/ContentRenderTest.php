@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Core\Mod\Content\Services\ContentRender;
 use Core\Tenant\Models\Workspace;
 use Illuminate\Http\Request;

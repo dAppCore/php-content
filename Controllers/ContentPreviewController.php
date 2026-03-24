@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Controllers;
 
+use Core\Mod\Content\Models\ContentItem;
 use Core\Tenant\Models\Workspace;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Core\Mod\Content\Models\ContentItem;
 
 /**
  * ContentPreviewController - Preview draft content before publishing.

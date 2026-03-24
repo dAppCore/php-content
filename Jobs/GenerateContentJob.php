@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Jobs;
 
+use Core\Mod\Content\Models\ContentBrief;
+use Core\Mod\Content\Services\AIGatewayService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Core\Mod\Content\Models\ContentBrief;
-use Core\Mod\Content\Services\AIGatewayService;
 
 /**
  * GenerateContentJob

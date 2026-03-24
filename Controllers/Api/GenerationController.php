@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Controllers\Api;
 
-use Core\Front\Controller;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Core\Api\Concerns\HasApiResponses;
 use Core\Api\Concerns\ResolvesWorkspace;
+use Core\Front\Controller;
 use Core\Mod\Content\Jobs\GenerateContentJob;
 use Core\Mod\Content\Models\AIUsage;
 use Core\Mod\Content\Models\ContentBrief;
 use Core\Mod\Content\Resources\ContentBriefResource;
 use Core\Mod\Content\Services\AIGatewayService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Content Generation API Controller

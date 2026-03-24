@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Tests\Unit;
 
-use Core\Tenant\Models\Workspace;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Core\Mod\Content\Enums\ContentType;
 use Core\Mod\Content\Models\ContentItem;
 use Core\Mod\Content\Models\ContentTaxonomy;
 use Core\Mod\Content\Services\ContentSearchService;
+use Core\Tenant\Models\Workspace;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
