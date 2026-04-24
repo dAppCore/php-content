@@ -1,12 +1,17 @@
 {
-    "name": "host-uk/core-content",
+    "name": "lthn/php-content",
     "description": "Content management and headless CMS for Laravel",
-    "keywords": ["laravel", "content", "cms", "headless"],
+    "keywords": [
+        "laravel",
+        "content",
+        "cms",
+        "headless"
+    ],
     "license": "EUPL-1.2",
     "require": {
         "php": "^8.2",
-        "host-uk/core": "dev-main",
-        "ezyang/htmlpurifier": "^4.17"
+        "ezyang/htmlpurifier": "^4.17",
+        "lthn/php": "dev-main"
     },
     "require-dev": {
         "laravel/pint": "^1.18",
