@@ -21,22 +21,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Clone sister packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Configure local path repositories
         run: |
-          for pkg in php-framework php-tenant; do
-            echo "Cloning $pkg into ../$pkg"
-            git clone --depth 1 \
-              "https://x-access-token:${GITHUB_TOKEN}@forge.lthn.ai/core/${pkg}.git" \
-              ../$pkg
-          done
-          ls -la ../php-framework/composer.json ../php-tenant/composer.json
+          if [ -f ../php/composer.json ]; then
+            composer config repositories.core path ../php --no-interaction
+          else
+            echo "No ../php checkout; Composer will use published metadata for lthn/php"
+          fi
 
-      - name: Configure path repositories
-        run: |
-          composer config repositories.core path ../php-framework --no-interaction
-          composer config repositories.tenant path ../php-tenant --no-interaction
+          if [ -f ../php-tenant/composer.json ]; then
+            composer config repositories.tenant path ../php-tenant --no-interaction
+          else
+            echo "No ../php-tenant checkout; Composer will use published metadata for lthn/php-tenant"
+          fi
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction --no-progress

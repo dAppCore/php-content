@@ -49,13 +49,6 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
-            "name": "core",
-            "type": "path",
-            "url": "../php"
-        }
-    ],
     "replace": {
         "core/php-content": "self.version"
     }
