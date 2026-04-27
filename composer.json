@@ -10,14 +10,14 @@
     "license": "EUPL-1.2",
     "require": {
         "php": "^8.2",
-        "lthn/php": "*",
-        "ezyang/htmlpurifier": "^4.17"
+        "ezyang/htmlpurifier": "^4.17",
+        "lthn/php": "*"
     },
     "require-dev": {
         "laravel/pint": "^1.18",
         "orchestra/testbench": "^9.0|^10.0",
         "pestphp/pest": "^3.0",
-        "core/php-tenant": "@dev"
+        "lthn/php-tenant": "@dev"
     },
     "autoload": {
         "psr-4": {
@@ -49,13 +49,6 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
-            "name": "core",
-            "type": "path",
-            "url": "../php-framework"
-        }
-    ],
     "replace": {
         "core/php-content": "self.version"
     }
