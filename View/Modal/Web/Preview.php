@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\View\Modal\Web;
 
+use Core\Mod\Content\Models\ContentItem;
 use Core\Tenant\Models\Workspace;
 use Livewire\Component;
-use Core\Mod\Content\Models\ContentItem;
 
 /**
  * Preview - Render draft/unpublished content with preview token.

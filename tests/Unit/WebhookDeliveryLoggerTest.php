@@ -31,7 +31,7 @@ class WebhookDeliveryLoggerTest extends TestCase
     {
         parent::setUp();
 
-        $this->logger = new WebhookDeliveryLogger();
+        $this->logger = new WebhookDeliveryLogger;
         $this->workspace = Workspace::factory()->create();
         $this->endpoint = ContentWebhookEndpoint::factory()->create([
             'workspace_id' => $this->workspace->id,

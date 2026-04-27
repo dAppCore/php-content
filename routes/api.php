@@ -9,7 +9,6 @@ declare(strict_types=1);
  * Supports both session auth and API key auth.
  */
 
-use Illuminate\Support\Facades\Route;
 use Core\Mod\Content\Controllers\Api\ContentBriefController;
 use Core\Mod\Content\Controllers\Api\ContentMediaController;
 use Core\Mod\Content\Controllers\Api\ContentRevisionController;
@@ -17,6 +16,7 @@ use Core\Mod\Content\Controllers\Api\ContentSearchController;
 use Core\Mod\Content\Controllers\Api\ContentWebhookController;
 use Core\Mod\Content\Controllers\Api\GenerationController;
 use Core\Mod\Content\Controllers\ContentPreviewController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

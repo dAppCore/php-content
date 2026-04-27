@@ -8,11 +8,11 @@ use Core\Events\ApiRoutesRegistering;
 use Core\Events\ConsoleBooting;
 use Core\Events\McpToolsRegistering;
 use Core\Events\WebRoutesRegistering;
+use Core\Mod\Content\Services\HtmlSanitiser;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
-use Core\Mod\Content\Services\HtmlSanitiser;
 use RuntimeException;
 
 /**

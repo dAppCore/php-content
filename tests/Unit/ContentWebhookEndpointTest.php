@@ -10,6 +10,18 @@ use Tests\TestCase;
 
 class ContentWebhookEndpointTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Register the webhook route if not already defined (routes may not
+        // load in Orchestra Testbench without the full Core event pipeline)
+        if (! \Illuminate\Support\Facades\Route::has('api.content.webhooks.receive')) {
+            \Illuminate\Support\Facades\Route::get('/api/content/webhooks/{endpoint}', fn () => null)
+                ->name('api.content.webhooks.receive');
+        }
+    }
+
     #[Test]
     public function it_generates_uuid_on_creation(): void
     {
@@ -73,7 +85,8 @@ class ContentWebhookEndpointTest extends TestCase
     #[Test]
     public function it_rejects_webhook_without_secret_when_signature_required(): void
     {
-        $endpoint = ContentWebhookEndpoint::factory()->create([
+        // Use make() to bypass the creating event which auto-generates secrets
+        $endpoint = ContentWebhookEndpoint::factory()->make([
             'secret' => null,
             'require_signature' => true,
         ]);
@@ -88,7 +101,8 @@ class ContentWebhookEndpointTest extends TestCase
     #[Test]
     public function it_allows_webhook_without_secret_when_signature_not_required(): void
     {
-        $endpoint = ContentWebhookEndpoint::factory()->create([
+        // Use make() to bypass the creating event which auto-generates secrets
+        $endpoint = ContentWebhookEndpoint::factory()->make([
             'secret' => null,
             'require_signature' => false,
         ]);

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Route;
 use Core\Mod\Content\View\Modal\Web\Blog;
 use Core\Mod\Content\View\Modal\Web\Help;
 use Core\Mod\Content\View\Modal\Web\HelpArticle;
 use Core\Mod\Content\View\Modal\Web\Post;
 use Core\Mod\Content\View\Modal\Web\Preview;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

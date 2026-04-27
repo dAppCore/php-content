@@ -16,7 +16,8 @@
     "require-dev": {
         "laravel/pint": "^1.18",
         "orchestra/testbench": "^9.0|^10.0",
-        "pestphp/pest": "^3.0"
+        "pestphp/pest": "^3.0",
+        "lthn/php-tenant": "@dev"
     },
     "autoload": {
         "psr-4": {
@@ -25,7 +26,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Core\\Mod\\Content\\Tests\\": "Tests/"
+            "Core\\Mod\\Content\\Tests\\": "Tests/",
+            "Tests\\": "tests/"
         }
     },
     "extra": {
@@ -46,5 +48,15 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "name": "core",
+            "type": "path",
+            "url": "../php"
+        }
+    ],
+    "replace": {
+        "core/php-content": "self.version"
+    }
 }

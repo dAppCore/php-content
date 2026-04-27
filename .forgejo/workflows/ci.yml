@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    container:
+      image: lthn/build:php-${{ matrix.php }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: ["8.3", "8.4"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone sister packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for pkg in php-framework php-tenant; do
+            echo "Cloning $pkg into ../$pkg"
+            git clone --depth 1 \
+              "https://x-access-token:${GITHUB_TOKEN}@forge.lthn.ai/core/${pkg}.git" \
+              ../$pkg
+          done
+          ls -la ../php-framework/composer.json ../php-tenant/composer.json
+
+      - name: Configure path repositories
+        run: |
+          composer config repositories.core path ../php-framework --no-interaction
+          composer config repositories.tenant path ../php-tenant --no-interaction
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Run Pint
+        run: |
+          if [ -f vendor/bin/pint ]; then
+            vendor/bin/pint --test
+          else
+            echo "Pint not installed, skipping"
+          fi
+
+      - name: Run unit tests
+        run: |
+          if [ -f vendor/bin/pest ]; then
+            if [ -d tests/Unit ] || [ -d tests/unit ]; then
+              vendor/bin/pest tests/Unit --ci
+            elif [ -d src/Tests/Unit ]; then
+              vendor/bin/pest src/Tests/Unit --ci
+            else
+              echo "No unit test directory found, skipping"
+            fi
+          elif [ -f vendor/bin/phpunit ]; then
+            vendor/bin/phpunit --testsuite=Unit
+          else
+            echo "No test runner found, skipping"
+          fi

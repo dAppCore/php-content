@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Middleware;
 
+use Closure;
 use Core\Mod\Content\Services\ContentRender;
 use Core\Tenant\Models\Workspace;
-use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

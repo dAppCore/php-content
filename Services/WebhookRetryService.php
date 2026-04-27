@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Services;
 
+use Core\Mod\Content\Models\ContentWebhookLog;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
-use Core\Mod\Content\Models\ContentWebhookLog;
 
 /**
  * WebhookRetryService

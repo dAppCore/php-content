@@ -4,9 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Package Overview
 
-This is `host-uk/core-content`, a Laravel package providing headless CMS functionality for the Core PHP Framework. It handles content management, AI generation, revisions, webhooks, and search.
+This is `lthn/php-content`, a Laravel package providing headless CMS functionality for the Core PHP Framework. It handles content management, AI generation, revisions, webhooks, and search.
 
 **Namespace:** `Core\Mod\Content\`
+**Entry point:** `Boot.php` (extends `ServiceProvider`, uses event-driven registration)
+**Dependencies:** `lthn/php` (core framework), `ezyang/htmlpurifier` (required, security-critical)
+**Optional:** `core-tenant` (workspaces/users), `core-agentic` (AI services), `core-mcp` (MCP tool registration)
 
 ## Commands
 
@@ -19,9 +22,9 @@ composer run test             # Pest tests
 
 ## Architecture
 
-### Boot.php (Service Provider)
+### Event-Driven Boot
 
-The entry point extending `ServiceProvider` with event-driven registration:
+`Boot.php` registers lazily via event listeners — routes, commands, views, and MCP tools are only loaded when their events fire:
 
 ```php
 public static array $listens = [
@@ -32,65 +35,72 @@ public static array $listens = [
 ];
 ```
 
-### Package Structure
+### AI Generation Pipeline (Two-Stage)
 
-```
-Boot.php              # Service provider + event listeners
-config.php            # Package configuration
-Models/               # Eloquent: ContentItem, ContentBrief, ContentRevision, etc.
-Services/             # Business logic: ContentSearchService, ContentRender, etc.
-Controllers/Api/      # REST API controllers
-Mcp/Handlers/         # MCP tools for AI agent integration
-Jobs/                 # Queue jobs: GenerateContentJob, ProcessContentWebhook
-View/Modal/           # Livewire components (Web/ and Admin/)
-View/Blade/           # Blade templates
-Migrations/           # Database migrations
-routes/               # web.php, api.php, console.php
-```
+`AIGatewayService` orchestrates a two-stage content generation pipeline:
+1. **Stage 1 (Gemini):** Fast, cost-effective draft generation
+2. **Stage 2 (Claude):** Quality refinement and brand voice alignment
 
-### Key Models
+Brief workflow: `pending` → `queued` → `generating` → `review` → `published`
 
-| Model | Purpose |
-|-------|---------|
-| `ContentItem` | Published content with revisions |
-| `ContentBrief` | Content generation requests/queue |
-| `ContentRevision` | Version history for content items |
-| `ContentMedia` | Attached media files |
-| `ContentTaxonomy` | Categories and tags |
-| `ContentWebhookEndpoint` | External webhook configurations |
+### Dual API Authentication
 
-### API Routes (routes/api.php)
+All `/api/content/*` endpoints are registered twice in `routes/api.php`:
+- Session auth (`middleware('auth')`)
+- API key auth (`middleware(['api.auth', 'api.scope.enforce'])`) — uses `Authorization: Bearer hk_xxx`
 
-- `/api/content/briefs` - Content brief CRUD
-- `/api/content/generate/*` - AI generation (rate limited)
-- `/api/content/media` - Media management
-- `/api/content/search` - Full-text search
-- `/api/content/webhooks/{endpoint}` - External webhooks (no auth, signature verified)
+Webhook endpoints are public (no auth, signature-verified via HMAC).
+
+### Livewire Component Paths
+
+Livewire components live in `View/Modal/` (not the typical `Livewire/` directory):
+- `View/Modal/Web/` — public-facing (Blog, Post, Help, HelpArticle, Preview)
+- `View/Modal/Admin/` — admin (WebhookManager, ContentSearch)
+
+Blade templates are in `View/Blade/`, registered with the `content` view namespace.
+
+### Search Backends
+
+`ContentSearchService` supports three backends via `CONTENT_SEARCH_BACKEND`:
+- `database` (default) — LIKE queries with relevance scoring (title > slug > excerpt > content)
+- `scout_database` — Laravel Scout with database driver
+- `meilisearch` — Laravel Scout with Meilisearch
 
 ## Conventions
 
-- UK English (colour, organisation, centre)
+- UK English (colour, organisation, centre, behaviour)
 - `declare(strict_types=1);` in all PHP files
 - Type hints on all parameters and return types
+- Final classes by default unless inheritance is intended
 - Pest for testing (not PHPUnit syntax)
-- Livewire + Flux Pro for UI components
+- Livewire + Flux Pro for UI components (not vanilla Alpine)
 - Font Awesome Pro for icons (not Heroicons)
 
-## Rate Limiters
+### Naming
 
-Defined in `Boot::configureRateLimiting()`:
-- `content-generate` - AI generation (10/min authenticated)
-- `content-briefs` - Brief creation (30/min)
-- `content-webhooks` - Incoming webhooks (60/min per endpoint)
-- `content-search` - Search queries (configurable, default 60/min)
+| Type | Convention | Example |
+|------|------------|---------|
+| Model | Singular PascalCase | `ContentItem` |
+| Table | Plural snake_case | `content_items` |
+| Controller | `{Model}Controller` | `ContentBriefController` |
+| Livewire Page | `{Feature}Page` | `ProductListPage` |
+| Livewire Modal | `{Feature}Modal` | `EditProductModal` |
+
+### Don'ts
+
+- Don't create controllers for Livewire pages
+- Don't use Heroicons (use Font Awesome Pro)
+- Don't use vanilla Alpine components (use Flux Pro)
+- Don't use American English spellings
 
 ## Configuration (config.php)
 
-Key settings exposed via environment:
-- `CONTENT_GENERATION_TIMEOUT` - AI generation timeout
-- `CONTENT_MAX_REVISIONS` - Revision limit per item
-- `CONTENT_SEARCH_BACKEND` - Search driver (database, scout_database, meilisearch)
-- `CONTENT_CACHE_TTL` - Content cache duration
+Key environment variables:
+- `CONTENT_GENERATION_TIMEOUT` — AI generation timeout (default 300s)
+- `CONTENT_MAX_REVISIONS` — Revision limit per item (default 50)
+- `CONTENT_SEARCH_BACKEND` — Search driver (database, scout_database, meilisearch)
+- `CONTENT_CACHE_TTL` — Content cache duration (default 3600s)
+- `CONTENT_SEARCH_RATE_LIMIT` — Search rate limit per minute (default 60)
 
 ## License
 

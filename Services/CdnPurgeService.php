@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Services;
 
-use Illuminate\Support\Facades\Log;
 use Core\Mod\Content\Models\ContentItem;
+use Illuminate\Support\Facades\Log;
 use Plug\Cdn\CdnManager;
 use Plug\Response;
 

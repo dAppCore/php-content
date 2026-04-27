@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Models;
 
+use Core\Mod\Content\Enums\ContentType;
+use Core\Mod\Content\Observers\ContentItemObserver;
+use Core\Mod\Content\Services\HtmlSanitiser;
+use Core\Seo\HasSeoMetadata;
 use Core\Tenant\Models\User;
 use Core\Tenant\Models\Workspace;
-use Core\Seo\HasSeoMetadata;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,9 +17,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Core\Mod\Content\Enums\ContentType;
-use Core\Mod\Content\Observers\ContentItemObserver;
-use Core\Mod\Content\Services\HtmlSanitiser;
 
 #[ObservedBy([ContentItemObserver::class])]
 class ContentItem extends Model

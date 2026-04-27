@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Services;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Core\Mod\Content\Models\ContentWebhookEndpoint;
 use Core\Mod\Content\Models\ContentWebhookLog;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * WebhookDeliveryLogger
@@ -43,7 +43,6 @@ class WebhookDeliveryLogger
      * @param  int  $durationMs  Processing duration in milliseconds
      * @param  int|null  $responseCode  HTTP response code if applicable
      * @param  string|null  $responseBody  Response body if applicable
-     * @return void
      */
     public function logSuccess(
         ContentWebhookLog $webhookLog,
@@ -74,7 +73,6 @@ class WebhookDeliveryLogger
      * @param  int  $durationMs  Processing duration in milliseconds
      * @param  int|null  $responseCode  HTTP response code if applicable
      * @param  string|null  $responseBody  Response body if applicable
-     * @return void
      */
     public function logFailure(
         ContentWebhookLog $webhookLog,
@@ -128,7 +126,7 @@ class WebhookDeliveryLogger
             'source_ip' => $request->ip(),
             'signature_verified' => false,
             'signature_failure_reason' => $failureReason,
-            'error_message' => 'Signature verification failed: ' . $failureReason,
+            'error_message' => 'Signature verification failed: '.$failureReason,
             'processed_at' => now(),
         ]);
 
@@ -149,7 +147,6 @@ class WebhookDeliveryLogger
      *
      * @param  ContentWebhookLog  $webhookLog  The webhook log entry
      * @param  string  $verificationMethod  How the signature was verified (e.g., 'current_secret', 'grace_period')
-     * @return void
      */
     public function logSignatureSuccess(
         ContentWebhookLog $webhookLog,
@@ -172,7 +169,6 @@ class WebhookDeliveryLogger
      *
      * @param  Request  $request  The incoming request
      * @param  ContentWebhookEndpoint  $endpoint  The webhook endpoint
-     * @return void
      */
     public function logSignatureNotRequired(
         Request $request,
@@ -195,7 +191,6 @@ class WebhookDeliveryLogger
      * @param  array  $payload  The parsed payload
      * @param  string  $eventType  The determined event type
      * @param  array  $verificationResult  The signature verification result
-     * @return ContentWebhookLog
      */
     public function createDeliveryLog(
         Request $request,
@@ -225,7 +220,6 @@ class WebhookDeliveryLogger
      * @param  ContentWebhookLog  $webhookLog  The webhook log entry
      * @param  int  $durationMs  Processing duration in milliseconds
      * @param  array|null  $result  Processing result details
-     * @return void
      */
     public function recordProcessingMetrics(
         ContentWebhookLog $webhookLog,
@@ -341,7 +335,6 @@ class WebhookDeliveryLogger
      * Extract content ID from payload.
      *
      * @param  array  $data  The webhook payload
-     * @return int|null
      */
     protected function extractContentId(array $data): ?int
     {
@@ -364,7 +357,6 @@ class WebhookDeliveryLogger
      * Extract content type from payload.
      *
      * @param  array  $data  The webhook payload
-     * @return string|null
      */
     protected function extractContentType(array $data): ?string
     {

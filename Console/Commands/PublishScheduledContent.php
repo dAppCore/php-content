@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Console\Commands;
 
+use Core\Mod\Content\Models\ContentItem;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Core\Mod\Content\Models\ContentItem;
 
 /**
  * PublishScheduledContent

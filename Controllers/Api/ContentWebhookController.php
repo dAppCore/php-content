@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Controllers\Api;
 
+use Core\Mod\Content\Jobs\ProcessContentWebhook;
+use Core\Mod\Content\Models\ContentWebhookEndpoint;
+use Core\Mod\Content\Services\WebhookDeliveryLogger;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
-use Core\Mod\Content\Jobs\ProcessContentWebhook;
-use Core\Mod\Content\Models\ContentWebhookEndpoint;
-use Core\Mod\Content\Models\ContentWebhookLog;
-use Core\Mod\Content\Services\WebhookDeliveryLogger;
 
 /**
  * Controller for receiving external content webhooks.
@@ -29,8 +28,7 @@ class ContentWebhookController extends Controller
 {
     public function __construct(
         protected WebhookDeliveryLogger $deliveryLogger
-    ) {
-    }
+    ) {}
 
     /**
      * Receive a webhook from an external source.
@@ -295,5 +293,4 @@ class ContentWebhookController extends Controller
 
         return 'wordpress.post_updated';
     }
-
 }

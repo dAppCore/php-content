@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\View\Modal\Web;
 
-use Livewire\Component;
 use Core\Mod\Content\Services\ContentRender;
 use Core\Tenant\Models\Workspace;
 use Core\Tenant\Services\WorkspaceService;
+use Livewire\Component;
 
 class HelpArticle extends Component
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Core\Mod\Content\Console\Commands;
 
-use Illuminate\Console\Command;
 use Core\Mod\Content\Models\ContentRevision;
+use Illuminate\Console\Command;
 
 /**
  * Prune old content revisions based on retention policy.
