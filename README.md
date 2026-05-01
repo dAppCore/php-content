@@ -47,6 +47,17 @@ php artisan serve
 
 Visit: http://localhost:8000
 
+## Local Package Development
+
+Composer resolves `lthn/php` and `lthn/php-tenant` from published package metadata by default. Sibling checkouts are optional and should only be configured when testing unpublished framework or tenant changes locally.
+
+```bash
+# Use absolute paths to your local clones.
+composer config --global repositories.lthn-php path /path/to/php
+composer config --global repositories.lthn-php-tenant path /path/to/php-tenant
+composer update lthn/php lthn/php-tenant
+```
+
 ## Project Structure
 
 ```
