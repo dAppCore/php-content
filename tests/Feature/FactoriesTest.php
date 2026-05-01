@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Core\Mod\Content\Models\ContentAuthor;
 use Core\Mod\Content\Models\ContentItem;
 use Core\Mod\Content\Models\ContentMedia;

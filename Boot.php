@@ -149,8 +149,8 @@ class Boot extends ServiceProvider
         $event->livewire('content.admin.webhook-manager', View\Modal\Admin\WebhookManager::class);
         $event->livewire('content.admin.content-search', View\Modal\Admin\ContentSearch::class);
 
-        if (file_exists(__DIR__.'/Routes/web.php')) {
-            $event->routes(fn () => require __DIR__.'/Routes/web.php');
+        if (file_exists(__DIR__.'/routes/web.php')) {
+            $event->routes(fn () => require __DIR__.'/routes/web.php');
         }
     }
 
@@ -159,8 +159,8 @@ class Boot extends ServiceProvider
      */
     public function onApiRoutes(ApiRoutesRegistering $event): void
     {
-        if (file_exists(__DIR__.'/Routes/api.php')) {
-            $event->routes(fn () => require __DIR__.'/Routes/api.php');
+        if (file_exists(__DIR__.'/routes/api.php')) {
+            $event->routes(fn () => require __DIR__.'/routes/api.php');
         }
     }
 
